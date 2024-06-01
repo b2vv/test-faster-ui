@@ -1,0 +1,19 @@
+services:
+  faster-whisper:
+    platform: linux/amd64
+    build: faster
+    container_name: faster-whisper
+    ports:
+      - "10300:5000"
+    volumes:
+      - ./faster/uploads:/app/uploads
+    restart: unless-stopped
+
+  app:
+    platform: linux/amd64
+    build: ui
+    ports:
+      - "8080:80"
+    container_name: app
+    depends_on:
+      - faster-whisper

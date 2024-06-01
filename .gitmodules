@@ -1,0 +1,6 @@
+[submodule "faster"]
+	path = faster
+	url = git@github.com:b2vv/faster-whisper.git
+[submodule "ui"]
+	path = ui
+	url = git@github.com:b2vv/transcript-ui-server.git
