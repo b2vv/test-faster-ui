@@ -9,11 +9,11 @@ services:
       - ./faster/uploads:/app/uploads
     restart: unless-stopped
 
-  app:
-    platform: linux/amd64
-    build: ui
-    ports:
-      - "8080:80"
-    container_name: app
-    depends_on:
-      - faster-whisper
+#  app:
+#    platform: linux/amd64
+#    build: ui
+#    ports:
+#      - "8080:80"
+#    container_name: app
+#    depends_on:
+#      - faster-whisper
