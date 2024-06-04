@@ -1,15 +1,13 @@
 services:
-#  faster-whisper-loader:
-#    platform: linux/amd64
-#    build:
-#      context: faster
-#      dockerfile: Dockerfile.loader
-#    container_name: faster-whisper-loader
-#    environment:
-#      - MODEL_NAME=small # tiny, base, small, medium, large
-#    entrypoint: /bin/sh -c 'python load_models.py'
-#    volumes:
-#      - ./faster/models:/app/models
+  faster-whisper-loader:
+    platform: linux/amd64
+    build:
+      context: faster
+      dockerfile: Dockerfile.loader
+    container_name: faster-whisper-loader
+    entrypoint: /bin/sh -c 'python load_models.py'
+    volumes:
+      - ./faster/models:/app/models
 
   faster-whisper:
     platform: linux/amd64
@@ -21,6 +19,8 @@ services:
       - ./faster/uploads:/app/uploads
       - ./faster/models:/app/models
     restart: unless-stopped
+    depends_on:
+      - faster-whisper-loader
 
 
   app:
