@@ -18,10 +18,17 @@ services:
     volumes:
       - ./faster/uploads:/app/uploads
       - ./faster/models:/app/models
+      - ./faster/transcriptions:/app/transcriptions
     restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
     depends_on:
       - faster-whisper-loader
-
 
   app:
     platform: linux/amd64
