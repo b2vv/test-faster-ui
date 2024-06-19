@@ -20,6 +20,25 @@ services:
     networks:
       - isolated
 
+  mongo-express:
+    image: mongo-express
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      - ME_CONFIG_MONGODB_AUTH_DATABASE=transcriptions_db
+#      - ME_CONFIG_MONGODB_AUTH_USERNAME=${MONGO_ROOT_USER}
+#      - ME_CONFIG_MONGODB_AUTH_PASSWORD=${MONGO_ROOT_PASSWORD}
+#      - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
+#      - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
+    networks:
+      - isolated
+      - net
+    depends_on:
+      - mongo
+    ports:
+      - "8888:8081"
+
   faster-whisper:
     platform: linux/amd64
     build: faster
@@ -30,9 +49,11 @@ services:
       - ./faster/uploads:/app/uploads
       - ./faster/models:/app/models
       - ./faster/transcriptions:/app/transcriptions
+      - ./faster/transcript.py:/app/transcript.py
     restart: unless-stopped
     networks:
       - isolated
+      - net
     depends_on:
       - mongo
       - faster-whisper-loader
